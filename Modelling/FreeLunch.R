@@ -59,9 +59,8 @@ x<-train3[,2:46]
 
 start_time <- Sys.time()
 set.seed(7845)
-rf_mod<-train(x,train3$Changed, importance=TRUE, ntree=500, 
-          nodesize = 20,  replace=TRUE,keep.forest=TRUE,
-          trControl=trainControl(method="cv",number=5,allowParallel=TRUE))
+rf_mod<-randomForest(x,train3$Changed, importance=TRUE, ntree=500, 
+                     nodesize = 20,  replace=TRUE,keep.forest=TRUE)
 end_time <- Sys.time()
 
 #show results against test & evaluate
