@@ -26,6 +26,7 @@ train1$Spanish_res<-ifelse(train1$pais_residencia=="ES",1,0)
 chans<-as.data.frame(table(train1$canal_entrada))
 chans<-chans[order(-chans$Freq),]
 topchan<-as.character(chans[1:52,1])
+saveRDS(topchan,"topchannels.rds")
 train1$Channel<-ifelse(train1$canal_entrada %in% topchan,train1$canal_entrada,"OTH")
 
 #drop other variables which cannot be used in prediction
