@@ -100,4 +100,7 @@ test3<-cbind(nums,fact_test)
 test3$Changed<-ifelse(test3$Changed==0,"No","Yes")
 test3$Changed<-as.factor(test3$Changed)
 
+#some NA's need to be removed - remove 1500 cases
+test3<-test3[complete.cases(test3$ult_fec_cli_1t),]
+
 saveRDS(test3, "testsetforRF.rds")
