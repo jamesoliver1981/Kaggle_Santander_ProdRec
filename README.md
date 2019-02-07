@@ -3,6 +3,16 @@
 This page is where I will document the progress of playing with the aforementioned dataset.  This competition ran back in 2016 and provided Kagglers with approximately 1m customer records, with monthly snapshots going back over 18 months.
 The data and information can be found [here](https://www.kaggle.com/c/santander-product-recommendation)
 
+# Data
+The train data is about 2.3GB in size.  You can see how I read it in in the script /DataPrep/dataprep.R.
+On a machine with 2 cores & 8GB RAM, this took 15 minutes to load.  To enable you to follow along, I created a couple of monthly snapshots of data, and saved these.  These are in the /data folder.
+
+Essentially what I am doing here is taking a month (March 2016) as my training base, and then adding in what changed in the following month.  This is then my basic training set.
+
+Whilst I'm here, I identify exactly what has been changed (ie which products have been purchased) to see if there is a majority to focus on, which might help to identify next steps for feature selection.
+
+/dataprep/dataprep_test.R is a replication of this for the test data set.  Again all data is provided in the /data folder.
+
 
 ## Welcome to GitHub Pages
 
