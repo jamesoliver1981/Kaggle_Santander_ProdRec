@@ -40,40 +40,12 @@ Given the complete opposites of the spectrum from the previous 2 results, I atte
  *- Sadly results here were almost exactly the same here as they were for the other ROSE attempt, with every customer being predicted to change.*
 
 ROSE apparently doesn't work here and so I attempted a final rebalanced dataset, but defining this manually.
-## Welcome to GitHub Pages
 
-You can use the [editor on GitHub](https://github.com/jamesoliver1981/Kaggle_Santander_ProdRec/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+ - The results here were more dispersed, however on closer inspection, it became clear that the model was guessing as in each class the prediction was split 80:20.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+These results are not particularly surprising.  Taking data and throwing at a model was unlikely to give a good result.
+# Next Steps
+Given this is sparse data, I will attempt xgboost as this is very good with sparse data and weak classifiers.  I hope this will also indicate which features to look more closely at.
+I will build a shiny app to visualise the data and identify what features to build.  Thus far, I have only used the current months' data to predict if the customer will add a new product.  I will look to add more months to the data set and see what differentiators there are.
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/jamesoliver1981/Kaggle_Santander_ProdRec/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+***# To be continued...***
