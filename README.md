@@ -20,6 +20,11 @@ This is therefore a sparse dataset.  There are 900k customers, and just under 50
 	 - **Rebalancing the data set:** - the dataset is approximately 95:5 in favour of no change, which might allow a model to have 95% accuracy by predicting none change.  This can be overcome by changing the proportion in the training set (not the test data set).  This is known as rebalancing.
 	 - **Using a Boosting approach:**  Boosting is a type of Machine Learning algorithm which takes weak classifiers and combines them to make a stronger prediction.  This is also a typical approach with a sparse data set.
 
+Below is a chart showing how the ~50k changes split up into how many new products were picked up.
+<img src="Images/Num_Changes.png" alt="hi" class="inline"/>
+
+It is interesting to note that about 73% of the time 1 product is added.  It would be interesting to see if there are different customer segments behind this.
+
 /dataprep/dataprep_test.R is a replication of what has been done to the train dataset for the test data set, so that predictions can be run.  Again all data is provided in the /data folder.
 
 # Free Lunch...
