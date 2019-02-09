@@ -45,7 +45,9 @@ I used an AWS 2xLarge machine to run these models.  Initially, I attempted to ru
 For each of these 4 models, I ran a classification random forest with 200 trees, and nodesize of at least 20 to avoid overfitting. 
 
 The ideal scenario would be to run the model on the whole dataset.  However, this proved too computationally heavy, therefore option 1 is the most representative option, as it maintains the structure of the data.
+
 <img src="Images/rf_basic.PNG" alt="hi" class="inline"/>
+
  *- Results here were very high accuracy, but when looking at the Out of Bag (OOB) results (generated on the train set) and the confusion matrix on the test, everything was predicted to "Not Change."  This was an expected result, and leads to looking at rebalancing the train set.*
  
 The ROSE package rebalances the dataset, and creates synthetic data which represents the entire data set.  This is a package I have successfully used previously to enhance results.  The downside to rebalancing the training set is that one is adjusting the prior probabilities going into the model, and this needs to be considered when using the probabilities to find an optimal cutoff.
