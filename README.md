@@ -62,7 +62,7 @@ Given the complete opposites of the spectrum from the previous 2 results, I atte
 ROSE apparently doesn't work here and so I attempted a final rebalanced dataset, but defining this manually.
 <img src="Images/rf_5050.PNG" alt="hi" class="inline"/>
  - The results here were more dispersed, however on closer inspection, it became clear that the model was guessing as in each class the prediction was split 80:20.
- - Below is the variable importance plot of this last plot.  Given the results, this likely doesn't contain much information.
+ - Below is the variable importance plot of this last model.  Given the results, this likely doesn't contain much information.
 
 <img src="Images/varimp_rf5050.png" alt="hi" class="inline"/>
 
