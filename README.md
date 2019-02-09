@@ -48,7 +48,7 @@ The ideal scenario would be to run the model on the whole dataset.  However, thi
 
 <img src="Images/rf_basic.PNG" alt="hi" class="inline"/>
 
- *- Results here were very high accuracy, but when looking at the Out of Bag (OOB) results (generated on the train set) and the confusion matrix on the test, everything was predicted to "Not Change."  This was an expected result, and leads to looking at rebalancing the train set.*
+ *- Initial results here were very high accuracy, but when looking at the Out of Bag (OOB) results (generated on the train set) and the confusion matrix on the test, everything was predicted to "Not Change."  This was an expected result, and leads to looking at rebalancing the train set.*
  
 The ROSE package rebalances the dataset, and creates synthetic data which represents the entire data set.  This is a package I have successfully used previously to enhance results.  The downside to rebalancing the training set is that one is adjusting the prior probabilities going into the model, and this needs to be considered when using the probabilities to find an optimal cutoff.
 
@@ -60,8 +60,11 @@ Given the complete opposites of the spectrum from the previous 2 results, I atte
  *- Sadly results here were almost exactly the same here as they were for the other ROSE attempt, with every customer being predicted to change.*
 
 ROSE apparently doesn't work here and so I attempted a final rebalanced dataset, but defining this manually.
-
+<img src="Images/rf_5050.PNG" alt="hi" class="inline"/>
  - The results here were more dispersed, however on closer inspection, it became clear that the model was guessing as in each class the prediction was split 80:20.
+ - Below is the variable importance plot of this last plot.  Given the results, this likely doesn't contain much information.
+
+<img src="Images/varimp_rf5050.png" alt="hi" class="inline"/>
 
 These results are not particularly surprising.  Taking data and throwing at a model was unlikely to give a good result.
 # Next Steps
