@@ -11,6 +11,7 @@ Essentially what I am doing here is taking a month (March 2016) as my training b
 
 Whilst I'm here, I identify exactly what has been changed (ie which products have been purchased) to see if there is a majority to focus on, which might help to identify next steps for feature selection.
 
+<img src="Images/SummaryChangedStatus.png" alt="hi" class="inline"/>
 /dataprep/dataprep_test.R is a replication of this for the test data set.  Again all data is provided in the /data folder.
 
 # Free Lunch...
