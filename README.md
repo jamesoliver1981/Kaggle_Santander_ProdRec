@@ -9,7 +9,9 @@ On a machine with 2 cores & 8GB RAM, this took 15 minutes to load.  To enable yo
 
 Essentially what I am doing here is taking a month (March 2016) as my training base, and then adding in what changed in the following month.  This is then my basic training set.
 
-Whilst I'm here, I identify exactly what has been changed (ie which products have been purchased) to see if there is a majority to focus on, which might help to identify next steps for feature selection.
+Whilst I'm here, I identify exactly what has been changed from one to the other (ie which customers have changed their products from March to April) to see if there is a majority to focus on, which might help to identify next steps for feature selection.  
+
+The below is a which shows how many customers made a change from March to Aril 2016.
 
 <img src="Images/SummaryChangedStatus.png" alt="hi" class="inline"/>
 /dataprep/dataprep_test.R is a replication of this for the test data set.  Again all data is provided in the /data folder.
