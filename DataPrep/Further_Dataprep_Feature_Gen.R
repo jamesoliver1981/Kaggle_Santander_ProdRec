@@ -9,7 +9,8 @@
 #read in the data and get create and save data sets to speed up replicability
 library(dplyr)
 library(data.table)
-setwd("C:/Users/James/Documents/James/DataScience/SantanderPrediction")
+library(scales)
+setwd("C:/Users/James/Documents/James/DataScience/SantanderPrediction/Kaggle_Santander_ProdRec/data")
 train<-readRDS("train.rds")
 
 df<-fread("train_ver2.csv",nrows=-1)
@@ -42,7 +43,9 @@ sep15<-readRDS("sep15.rds")
 jun15<-readRDS("jun15.rds")
 mar15<-readRDS("mar15.rds")
 
-#build as function, which takes one of the above snapshots, 
+
+#build as function, which takes one of the above snapshots, and compares to train and id a difference 
+#and append - only a variance to the current month, vs different to what was there in the prior snapshot
 createchange<-function(traindata=train,snapshot,jj) {
 #merge the train & snapshot, keep all.x - ensures all aligned for doing diff
         colnames(snapshot)<-paste(colnames(snapshot),jj,sep="_")
@@ -69,7 +72,7 @@ createchange<-function(traindata=train,snapshot,jj) {
         #customer is a new customer at this point or not
         colnames(change_2)[2]<-paste("ExistingCust_at_pr",jj,sep="")
         change_2[2]<-ifelse(is.na(change_2[2]),0,1)
-        
+        change_2[is.na(change_2)]<- -1
         train<<-merge(train,change_2,by="ncodpers",all.x = TRUE)
 }
 createchange(traindata=train, snapshot=dec15,jj=3)
@@ -77,9 +80,70 @@ createchange(traindata=train, snapshot=sep15,jj=6)
 createchange(traindata=train, snapshot=jun15,jj=9)
 createchange(traindata=train, snapshot=mar15,jj=12)
 saveRDS(train,"train_with_history.rds")
+trainplus<-readRDS("train_with_history.rds")
+
 
 #start investigating what could drive the change
 #split customers into those who have changed and those who haven't
 #and look at distributions
+
+#Features to look at
+#have the values for certain things like renta and age etc changed
+        #renta create an appropriate inputted values
+
+#Identify those variables which never change and drop them
+m2m<-colSums(trainplus[,49:236]==0)
+m2m<-as.data.frame(m2m)
+
+#Number of change is limited to the max of those who were in existance then
+MaxVal<-as.data.frame(colSums(trainplus[,49:236] !=-1))
+m2m$MaxVal<-MaxVal$`colSums(trainplus[, 49:236] != -1)`
+m2m$DropVars<-ifelse(m2m$m2m==m2m$MaxVal,"Drop","OK")
+m2m$Vars<-rownames(m2m)
+
+m2m$prop_Same<-percent(m2m$m2m/m2m$MaxVal)
+DropVars<-m2m$Vars[m2m$DropVars=="Drop"]
+DropVars
+#customer classification never changes, and neither does their joint income - assume gathered when join
+# customers address type doesn't ever change either
+#surprising
+        #Gender changes - do other changes happen here?
+        #Date when customer became a customer of the bank
+dim(trainplus[trainplus$sexo_pr_6==1,])[1]
+dim(trainplus[trainplus$fecha_alta==1,])[1]
+
+#additional to drop -
+        #antiguedad - customer seniority in months - will always grow
+
+
+trainplus2<-select(trainplus,-DropVars)
+trainplus2<-trainplus2 %>% select(-starts_with("antiguedad_pr"))
+#dropped a bunch
+#shows that there are a lot of new customers  - maybe that is something to
+#look at and understand how many people change from whether they are new 
+#or older
+
+#given inability of models to use factors - probably need to find a way of encoding the first customer date
+        #currently a date - rise to too many factors
+
+#Given number of na's in renta is over 25%, some cleaning/imputting will be needed
+sapply(trainplus2[,1:48], function(y) sum(length(which(is.na(y)))))
+
+
+#create a view on how often changed - up and down for products - 
+        #how to get a cleaner view of this so model doesn't need so many variables
+
+#how near to birthday? Do people change at certain times in their life?  Age range yes no?
+
+#What products are bought together?  Does this highlight types of groups?
+
+#read in trainchange as this has the label for if something changed in the subsequent month
+trainchange1<-readRDS("trainchange1.rds")
+
+trainlabel<-select(trainchange1, c("ncodpers","Changed"))
+
+trainplus3<-merge(trainplus2,trainlabel,by="ncodpers",all.x = TRUE)
+saveRDS(trainplus3,"trainplus_label.rds")
+
 
 
