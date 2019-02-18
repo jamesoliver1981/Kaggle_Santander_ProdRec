@@ -107,7 +107,7 @@ Comparing the key statistics show the improvement.
 |             | xgboost Baseline | xgboost Base + Data + Decrease Weighting |  |
 |-------------|:---------:|:----:|--|
 | *Sensitivity* | 20.2%     |19.7%    | 
-| *Prevelance Detection*|         14%|12.1%%    | 
+| *Prevelance Detection*|         14%|12.1%    | 
 | *Posive Predictive Value*         |  7.5%       |8.4%    |
 
 So a slightly reduced amount are highlighted as positive, but of those that are the prediction is more accurate.  Looking at what the main drivers of this are is interesting.
@@ -121,4 +121,5 @@ Additionally all of this data needs to be investigated to see what groups of peo
 # Next Steps
 I will build a shiny app to visualise the data and identify what features to build.  Thus far, I have only used the current months' data to predict if the customer will add a new product.  
 The first feature I will look at will be the renta variable and see if there is a better imputted value to use which can give the model more information.
+
 ***# To be continued...***
