@@ -1,6 +1,7 @@
 # Playing with Kaggles' Santander Production Recommendation Dataset
 
 This page is where I will document the progress of playing with the aforementioned dataset.  This competition ran back in 2016 and provided Kagglers with approximately customer records, with monthly snapshots going back over 18 months.  There are approximately 1million unique customers over the 18 month period, and the majority appear in each month.
+The competition was actually based on if a customer were to purchase a product, what would they buy.  I will instead focus on creating a model which predicts who will buy a new product of any description.  This restricts my ability to just lift from existing Kaggle submissions.
 The data and information can be found [here](https://www.kaggle.com/c/santander-product-recommendation)
 
 # Data
@@ -67,8 +68,53 @@ ROSE apparently doesn't work here and so I attempted a final rebalanced dataset,
 <img src="Images/varimp_rf5050.png" alt="hi" class="inline"/>
 
 These results are not particularly surprising.  Taking data and throwing at a model was unlikely to give a good result.
-# Next Steps
-Given this is sparse data, I will attempt xgboost as this is very good with sparse data and weak classifiers.  I hope this will also indicate which features to look more closely at.
-I will build a shiny app to visualise the data and identify what features to build.  Thus far, I have only used the current months' data to predict if the customer will add a new product.  I will look to add more months to the data set and see what differentiators there are.
 
+#Modelling with Sparse Data - xgboost
+
+xgboost is actually optimised for sparse data, therefore this may give better results than a random forest.  xgboost is a boosting algortihm, which picks up weak classifiers and iterates through the model, finds errors and corrects itself.  This is an ensembling method, as is random forest, but the approach is different.
+
+Additionally here, I have added new data here.  Initially I only had the original month data, and a label to identify if it changed in the subsequent month.  Now I go back 3, 6, 9 and 12 months, and look to see if there are changes to the current month.  I then strip out a few data points where there are no changes.  This is detailed in DataPrep/Further_Dataprep_Feature_Gen file.
+
+#Results
+
+Initially I started with a 20k dataset, that was not rebalanced.  This predicted almost everything to not change as per the initial random forest model.  However xgboost provides the option to reweight the positive class.  This gave immediate gains over the best random forest model.
+Below is the confusion matrix of this model.
+
+<img src="Images/xgb2_10d_100n_1weight.PNG" alt="hi" class="inline"/>
+
+Comparing the key statistics show the improvement.
+        #Sensitivity 20,2% vs 23,9%
+        #Prevelance Detection 14% vs 24.6%
+        #Positive Predictive Value 7,5% vs 5.2%
+
+Sensitivity is of those that are actually positive, how many are predicted to be positive.  Here this is slightly reduced.
+Prevelance Detection looks at the total proportion of cases that are predicted as positive.  The real result is 3.5%.  This reduction is therefore a significant improvement.
+The Positive Predictive Value is of those that are predicted to be positive, what proportion are actually positive.  Here a higher value is better.  The xgboost model has a 50% improvement and if those that were predicted as positive were taken as a campaign group, then the success would be more than double of chance (7.5%/3.5%).
+
+These results are replicable via Modelling/Model_post_feature_eng_v1.
+
+I then adjust a number of the hyper parameters to see what the impacts here are.
+	#Increasing the number of rounds has minimal impact
+	#Increasing the weights doesn't improve the model - theory being that the value to Santander would be much greater than the reweighting
+	#Flexing the cutoff point generally reduces the Positive Predictive Value
+
+However the best results came from 2 approaches.  Reducing the weights by 50% and increasing the amount of data that is being fed into the model to 194k observations.  The confusion matrix of these results is below.
+
+<img src="Images/xgb10_3_10d_100n_halfweight.PNG" alt="hi" class="inline"/>
+Comparing the key statistics show the improvement.
+        #Sensitivity 19.7% vs 20,2% 
+        #Prevelance Detection 12.1% vs 14% 
+        #Positive Predictive Value 8.4% vs 7,5% 
+
+So a slightly reduced amount are highlighted as positive, but of those that are the prediction is more accurate.  Looking at what the main drivers of this are is interesting.
+
+<img src="Images/Imp_plot_XGboost_n100_d10_190k.PNG" alt="hi" class="inline"/>
+
+Renta is the total household income and is the strongest predictor.  Antiguedad is the length of time that the customer has been with Santander in months.  
+Renta is very interesting because about 20% of the data was originally missing values, and these were set to -99.  This needs to be investigated.
+Additionally all of this data needs to be investigated to see what groups of people tend to add products, and those who don't.
+
+# Next Steps
+I will build a shiny app to visualise the data and identify what features to build.  Thus far, I have only used the current months' data to predict if the customer will add a new product.  
+The first feature I will look at will be the renta variable and see if there is a better imputted value to use which can give the model more information.
 ***# To be continued...***
