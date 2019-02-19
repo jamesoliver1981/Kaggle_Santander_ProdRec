@@ -119,7 +119,9 @@ Renta is very interesting because about 20% of the data was originally missing v
 Additionally all of this data needs to be investigated to see what groups of people tend to add products, and those who don't.
 
 # Next Steps
-I will build a shiny app to visualise the data and identify what features to build.  Thus far, I have only used the current months' data to predict if the customer will add a new product.  
+I will build a shiny app to visualise the data and identify what features to build, and if any further cleaning needs to be done.  
 The first feature I will look at will be the renta variable and see if there is a better imputted value to use which can give the model more information.
+
+The Shiny app is deployed [here](https://jamesoliver1981.shinyapps.io/santander_distributions_and_pivots/) and I am conducting explorative analysis at present.
 
 ***# To be continued...***
